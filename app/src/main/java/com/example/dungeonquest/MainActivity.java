@@ -2,6 +2,7 @@ package com.example.dungeonquest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,26 +16,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        newgame = (TextView)findViewById(R.id.newgame);
+        cont = (TextView)findViewById(R.id.cont);
+        htp = (TextView)findViewById(R.id.htp);
+
         newgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                launchGame();
             }
         });
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                launchGame();
             }
         });
         htp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                launchInstructions();
             }
         });
     }
 
+    private void launchGame() {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
 
+    private void launchInstructions() {
+        Intent intent = new Intent(this, Instructions.class);
+        startActivity(intent);
+    }
 
 }
