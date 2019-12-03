@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <ImageView
+        android:id="@+id/barbackground"
+        android:layout_width="385dp"
+        android:layout_height="85dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007"
+        app:srcCompat="@drawable/brown"
+        tools:srcCompat="@drawable/brown" />
+
     <ProgressBar
         android:id="@+id/healthbar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -15,12 +28,12 @@
         android:max="100"
         android:progress="100"
         android:progressTint="#F44336"
-        app:layout_constraintBottom_toTopOf="@+id/staminabar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.007" />
 
     <ProgressBar
         android:id="@+id/staminabar"
@@ -75,12 +88,12 @@
         android:max="50"
         android:progress="50"
         android:progressTint="#F44336"
-        app:layout_constraintBottom_toTopOf="@+id/enemyabilitybar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.007" />
 
     <ProgressBar
         android:id="@+id/enemyabilitybar"
@@ -92,7 +105,7 @@
         android:progressTint="#9C27B0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintHorizontal_bias="0.935"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.036" />
@@ -101,14 +114,14 @@
         android:id="@+id/hero"
         android:layout_width="205dp"
         android:layout_height="396dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.695"
-        app:srcCompat="@drawable/swordsman"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/swordsman" />
 
     <ImageView
         android:id="@+id/enemy"
