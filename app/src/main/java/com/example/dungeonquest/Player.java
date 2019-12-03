@@ -27,5 +27,35 @@ public class Player {
         return experience;
     }
 
+    public void levelUp(){
 
+    }
+
+    public void takeDamage(){
+
+    }
+
+    public void heal(){
+
+    }
+
+    public void attack(){
+
+    }
+
+    public void gainStamina(){
+
+    }
+
+    public void castSpell(){
+
+    }
+
+    public void gainMana(){
+
+    }
+
+    public void gainXP(){
+
+    }
 }
