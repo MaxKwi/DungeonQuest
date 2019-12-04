@@ -1,6 +1,7 @@
 package com.example.dungeonquest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView newgame, cont, htp;
 
+    ConstraintLayout title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         newgame = (TextView)findViewById(R.id.newgame);
         cont = (TextView)findViewById(R.id.cont);
         htp = (TextView)findViewById(R.id.htp);
+
+        title = findViewById(R.id.titlebackground);
+        title.setBackgroundResource(R.drawable.titlecropped);
 
         newgame.setOnClickListener(new View.OnClickListener() {
             @Override
