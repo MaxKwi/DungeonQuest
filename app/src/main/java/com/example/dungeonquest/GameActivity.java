@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity implements
         GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener{
@@ -26,6 +28,12 @@ public class GameActivity extends AppCompatActivity implements
 
     private static final String TAG = "GameActivity";
 
+    private int enemyNum=1;
+
+    Player hero = new Player();
+
+    ArrayList<Enemy> enemies = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +44,8 @@ public class GameActivity extends AppCompatActivity implements
 
         background = findViewById(R.id.background);
         background.setBackgroundResource(R.drawable.forest_environment);
+
+        enemies.add(new Enemy());
     }
 
     public void actionUp(){
@@ -51,6 +61,11 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void actionDown(){
+
+    }
+
+    public void enemyAction(){
+
 
     }
 
@@ -139,22 +154,25 @@ public class GameActivity extends AppCompatActivity implements
         if (direction==Direction.up){
             //do your stuff
             Log.d(TAG,"onSwipe: up");
-
+            actionUp();
         }
 
         if (direction==Direction.down){
             //do your stuff
             Log.d(TAG,"onSwipe: down");
+            actionDown();
         }
 
         if (direction==Direction.left){
             //do your stuff
             Log.d(TAG,"onSwipe: left");
+            actionLeft();
         }
 
         if (direction==Direction.right){
             //do your stuff
             Log.d(TAG,"onSwipe: right");
+            actionRight();
         }
 
         return true;
