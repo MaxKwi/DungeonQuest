@@ -2,18 +2,16 @@ package com.example.dungeonquest;
 
 public class Player {
 
-    int level, health, maxhp, stamina, maxstamina, magic, maxmagic, experience, maxexp;
+    int level, health, maxhp, mana, maxmana, experience, maxexp;
 
-    boolean attacked, casted, dead;
+    boolean casted, dead;
 
     public Player(){
         level=1;
         health=100;
         maxhp=100;
-        stamina=50;
-        maxstamina=50;
-        magic=20;
-        maxmagic=20;
+        mana=20;
+        maxmana=20;
         experience=0;
         maxexp=10;
     }
@@ -24,19 +22,13 @@ public class Player {
     public int getHealth(){
         return health;
     }
-    public int getStamina(){
-        return stamina;
-    }
-    public int getMagic(){
-        return magic;
+    public int getMana(){
+        return mana;
     }
     public int getExperience(){
         return experience;
     }
 
-    public boolean checkAttacked(){
-        return attacked;
-    }
     public boolean checkCasted(){
         return casted;
     }
@@ -63,28 +55,9 @@ public class Player {
         }
     }
 
-    public void attack(int cost){
-        if(stamina>=cost){
-            stamina-=cost;
-            attacked=true;
-        }
-        else{
-            attacked=false;
-        }
-    }
-
-    public void gainStamina(int amount){
-        if((stamina+amount)>maxstamina){
-            stamina=maxstamina;
-        }
-        else{
-            stamina+=amount;
-        }
-    }
-
     public void castSpell(int cost){
-        if(magic>=cost){
-            magic-=cost;
+        if(mana>=cost){
+            mana-=cost;
             casted=true;
         }
         else{
@@ -93,11 +66,11 @@ public class Player {
     }
 
     public void gainMana(int amount){
-        if((magic+amount)>maxmagic){
-            magic=maxmagic;
+        if((mana+amount)>maxmana){
+            mana=maxmana;
         }
         else{
-            magic+=amount;
+            mana+=amount;
         }
     }
 
