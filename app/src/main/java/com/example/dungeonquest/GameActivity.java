@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -28,7 +29,8 @@ public class GameActivity extends AppCompatActivity implements
 
     private static final String TAG = "GameActivity";
 
-    private int enemyNum=1;
+    private int enemyNum=0, damageTurns;
+    private int damage, damageOverTime, enemyDamage;
 
     Player hero = new Player();
 
@@ -65,8 +67,26 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void enemyAction(){
-
-
+        enemies.get(enemyNum).takeDamage(damage);
+        if(enemies.get(enemyNum).checkDead()){
+            enemies.add(new Enemy());
+        }
+        else{
+            enemies.get(enemyNum).gainAbility(5);
+            enemies.get(enemyNum).useAbility();
+            if(enemies.get(enemyNum).getUsedAbility()){
+                enemyDamage=50;
+            }
+            else{
+                enemyDamage=25;
+            }
+            hero.takeDamage(enemyDamage);
+            if (hero.checkDead()){
+                //DELETE DATABASE DATA HERE
+                Intent intent = new Intent(this, GameOver.class);
+                startActivity(intent);
+            }
+        }
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
