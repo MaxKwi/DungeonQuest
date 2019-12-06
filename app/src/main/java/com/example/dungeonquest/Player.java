@@ -10,8 +10,8 @@ public class Player {
         level=1;
         health=100;
         maxhp=100;
-        mana=20;
-        maxmana=20;
+        mana=50;
+        maxmana=50;
         experience=0;
         maxexp=10;
     }
@@ -22,11 +22,20 @@ public class Player {
     public int getHealth(){
         return health;
     }
+    public int getMaxHealth(){
+        return maxhp;
+    }
     public int getMana(){
         return mana;
     }
+    public int getMaxMana(){
+        return maxmana;
+    }
     public int getExperience(){
         return experience;
+    }
+    public int getMaxExp(){
+        return maxexp;
     }
 
     public boolean checkCasted(){

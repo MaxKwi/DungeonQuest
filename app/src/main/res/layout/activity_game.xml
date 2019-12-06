@@ -48,7 +48,7 @@
         app:layout_constraintVertical_bias="0.018" />
 
     <ProgressBar
-        android:id="@+id/magicbar"
+        android:id="@+id/manabar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="179dp"
         android:layout_height="21dp"
@@ -193,7 +193,7 @@
         app:layout_constraintVertical_bias="0.072" />
 
     <TextView
-        android:id="@+id/magic"
+        android:id="@+id/mana"
         android:layout_width="162dp"
         android:layout_height="53dp"
         android:text="50"

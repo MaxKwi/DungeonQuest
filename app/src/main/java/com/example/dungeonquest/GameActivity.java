@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class GameActivity extends AppCompatActivity implements
 
     ConstraintLayout background;
 
+    ProgressBar healthbar, manabar, expbar, enemyhealthbar, enemyabilitybar;
+    TextView health, mana, exp, enemyhealth, enemyability;
+
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat mDetector;
 
@@ -29,7 +34,7 @@ public class GameActivity extends AppCompatActivity implements
 
     private static final String TAG = "GameActivity";
 
-    private int enemyNum=0, damageTurns;
+    private int enemyNum=0, damageTurns, turnsDamaged;
     private int damage, damageOverTime, enemyDamage;
 
     Player hero = new Player();
@@ -47,15 +52,33 @@ public class GameActivity extends AppCompatActivity implements
         background = findViewById(R.id.background);
         background.setBackgroundResource(R.drawable.forest_environment);
 
+        health = findViewById(R.id.health);
+        mana = findViewById(R.id.mana);
+        exp = findViewById(R.id.exp);
+        enemyhealth = findViewById(R.id.enemyhealth);
+        enemyability = findViewById(R.id.enemyability);
+
+        healthbar = findViewById(R.id.healthbar);
+        manabar = findViewById(R.id.manabar);
+        expbar = findViewById(R.id.expbar);
+        enemyhealthbar = findViewById(R.id.enemyhealthbar);
+        enemyabilitybar = findViewById(R.id.enemyabilitybar);
+
         enemies.add(new Enemy());
     }
 
     public void actionUp(){
+        damage = 10;
+        enemyAction();
 
     }
 
     public void actionLeft(){
-
+        damage=15;
+        damageOverTime=5;
+        damageTurns=3;
+        turnsDamaged=0;
+        enemyAction();
     }
 
     public void actionRight(){
@@ -68,7 +91,13 @@ public class GameActivity extends AppCompatActivity implements
 
     public void enemyAction(){
         enemies.get(enemyNum).takeDamage(damage);
+        if(turnsDamaged<damageTurns){
+            enemies.get(enemyNum).takeDamage(damageOverTime);
+            turnsDamaged++;
+        }
+        updateUI();
         if(enemies.get(enemyNum).checkDead()){
+            //UPDATE SAVE DATA HERE
             enemies.add(new Enemy());
         }
         else{
@@ -81,12 +110,27 @@ public class GameActivity extends AppCompatActivity implements
                 enemyDamage=25;
             }
             hero.takeDamage(enemyDamage);
+            updateUI();
             if (hero.checkDead()){
                 //DELETE DATABASE DATA HERE
                 Intent intent = new Intent(this, GameOver.class);
                 startActivity(intent);
             }
         }
+    }
+
+    public void updateUI(){
+        health.setText(""+hero.getHealth());
+        mana.setText(""+hero.getMana());
+        exp.setText(""+hero.getExperience());
+        enemyhealth.setText(""+enemies.get(enemyNum).getEnemyHealth());
+        enemyability.setText(""+enemies.get(enemyNum).getAbility());
+
+        healthbar.setProgress(hero.getHealth());
+        manabar.setProgress(hero.getMana());
+        expbar.setProgress(hero.getExperience());
+        enemyhealthbar.setProgress(enemies.get(enemyNum).getEnemyHealth());
+        enemyabilitybar.setProgress(enemies.get(enemyNum).getAbility());
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
