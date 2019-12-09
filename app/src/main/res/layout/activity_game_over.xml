@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="293dp"
-        android:layout_height="121dp"
+        android:layout_width="396dp"
+        android:layout_height="164dp"
         android:fontFamily="@font/rub"
         android:text="Game Over"
         android:textAlignment="center"

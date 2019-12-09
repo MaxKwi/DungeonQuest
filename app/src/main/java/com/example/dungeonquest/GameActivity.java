@@ -35,7 +35,8 @@ public class GameActivity extends AppCompatActivity implements
     private static final String TAG = "GameActivity";
 
     private int enemyNum=0, damageTurns, turnsDamaged;
-    private int damage, damageOverTime, enemyDamage;
+    private int damage, damageOverTime, enemyDamage, heals;
+    private boolean attacked, healed;
 
     Player hero = new Player();
 
@@ -69,7 +70,8 @@ public class GameActivity extends AppCompatActivity implements
 
     public void actionUp(){
         damage = 10;
-        enemyAction();
+        attacked=true;
+        Action();
 
     }
 
@@ -78,27 +80,38 @@ public class GameActivity extends AppCompatActivity implements
         damageOverTime=5;
         damageTurns=3;
         turnsDamaged=0;
-        enemyAction();
+        attacked=true;
+        Action();
     }
 
     public void actionRight(){
-
+        heals=10;
+        healed=true;
+        Action();
     }
 
     public void actionDown(){
 
     }
 
-    public void enemyAction(){
-        enemies.get(enemyNum).takeDamage(damage);
-        if(turnsDamaged<damageTurns){
-            enemies.get(enemyNum).takeDamage(damageOverTime);
-            turnsDamaged++;
+    public void Action(){
+        if(attacked){
+            enemies.get(enemyNum).takeDamage(damage);
+            if(turnsDamaged<damageTurns){
+                enemies.get(enemyNum).takeDamage(damageOverTime);
+                turnsDamaged++;
+            }
+            updateUI();
+            attacked=false;
         }
-        updateUI();
+        if(healed){
+            hero.heal(heals);
+            healed=false;
+        }
         if(enemies.get(enemyNum).checkDead()){
             //UPDATE SAVE DATA HERE
             enemies.add(new Enemy());
+            enemyNum++;
         }
         else{
             enemies.get(enemyNum).gainAbility(5);
