@@ -6,6 +6,7 @@ import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -69,14 +70,16 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void actionUp(){
-        damage = 10;
+        //BASIC ATTACK
+        damage = 15;
         attacked=true;
         Action();
 
     }
 
     public void actionLeft(){
-        damage=15;
+        //SPECIAL ATTACK
+        damage=10;
         damageOverTime=5;
         damageTurns=3;
         turnsDamaged=0;
@@ -85,18 +88,23 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void actionRight(){
-        heals=10;
+        //HEAL
+        heals=50;
         healed=true;
         Action();
     }
 
     public void actionDown(){
-
+        //ULTIMATE ATTACK
+        damage=35;
+        attacked=true;
     }
 
     public void Action(){
+        //ATTACKS
         if(attacked){
             enemies.get(enemyNum).takeDamage(damage);
+            //DAMAGE OVER TIME
             if(turnsDamaged<damageTurns){
                 enemies.get(enemyNum).takeDamage(damageOverTime);
                 turnsDamaged++;
@@ -104,26 +112,41 @@ public class GameActivity extends AppCompatActivity implements
             updateUI();
             attacked=false;
         }
+        //HEALS
         if(healed){
             hero.heal(heals);
             healed=false;
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Magic here
+            }
+        }, 1000); // Millisecond 1000 = 1 sec
+
+        //SPAWNS NEW ENEMY
         if(enemies.get(enemyNum).checkDead()){
             //UPDATE SAVE DATA HERE
             enemies.add(new Enemy());
             enemyNum++;
+            updateUI();
         }
+        //ENEMY ATTACKS
         else{
             enemies.get(enemyNum).gainAbility(5);
             enemies.get(enemyNum).useAbility();
+            //SPECIAL ABILITY
             if(enemies.get(enemyNum).getUsedAbility()){
-                enemyDamage=50;
+                enemyDamage=40;
             }
+            //BASIC ATTACK
             else{
-                enemyDamage=25;
+                enemyDamage=15;
             }
             hero.takeDamage(enemyDamage);
             updateUI();
+            //ENDS GAME
             if (hero.checkDead()){
                 //DELETE DATABASE DATA HERE
                 Intent intent = new Intent(this, GameOver.class);
