@@ -37,6 +37,7 @@ public class GameActivity extends AppCompatActivity implements
 
     private int enemyNum=0, damageTurns, turnsDamaged;
     private int damage, damageOverTime, enemyDamage, heals;
+    private int specialManaCost=15, ultManaCost=50;
     private boolean attacked, healed;
 
     Player hero = new Player();
@@ -101,7 +102,7 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     public void Action(){
-        //ATTACKS
+        // ATTACKS
         if(attacked){
             enemies.get(enemyNum).takeDamage(damage);
             //DAMAGE OVER TIME
@@ -115,44 +116,48 @@ public class GameActivity extends AppCompatActivity implements
         //HEALS
         if(healed){
             hero.heal(heals);
+            updateUI();
             healed=false;
         }
+
+        final Intent intent = new Intent(this, GameOver.class);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Magic here
+                //SPAWNS NEW ENEMY
+                if(enemies.get(enemyNum).checkDead()){
+                    //UPDATE SAVE DATA HERE
+                    enemies.add(new Enemy());
+                    enemyNum++;
+                    updateUI();
+                }
+                //ENEMY ATTACKS
+                else{
+                    enemies.get(enemyNum).gainAbility(5);
+                    enemies.get(enemyNum).useAbility();
+                    //SPECIAL ABILITY
+                    if(enemies.get(enemyNum).getUsedAbility()){
+                        enemyDamage=40;
+                    }
+                    //BASIC ATTACK
+                    else{
+                        enemyDamage=15;
+                    }
+                    hero.takeDamage(enemyDamage);
+                    updateUI();
+                }
+                //REGAINS MANA
+                if(hero.getMana()<hero.getMaxMana()){
+                    hero.gainMana(10);
+                }
+                //ENDS GAME
+                if (hero.checkDead()){
+                    //DELETE DATABASE DATA HERE
+                    startActivity(intent);
+                }
             }
-        }, 1000); // Millisecond 1000 = 1 sec
-
-        //SPAWNS NEW ENEMY
-        if(enemies.get(enemyNum).checkDead()){
-            //UPDATE SAVE DATA HERE
-            enemies.add(new Enemy());
-            enemyNum++;
-            updateUI();
-        }
-        //ENEMY ATTACKS
-        else{
-            enemies.get(enemyNum).gainAbility(5);
-            enemies.get(enemyNum).useAbility();
-            //SPECIAL ABILITY
-            if(enemies.get(enemyNum).getUsedAbility()){
-                enemyDamage=40;
-            }
-            //BASIC ATTACK
-            else{
-                enemyDamage=15;
-            }
-            hero.takeDamage(enemyDamage);
-            updateUI();
-            //ENDS GAME
-            if (hero.checkDead()){
-                //DELETE DATABASE DATA HERE
-                Intent intent = new Intent(this, GameOver.class);
-                startActivity(intent);
-            }
-        }
+        }, 500); // Millisecond 1000 = 1 sec
     }
 
     public void updateUI(){
