@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements
 
     private int enemyNum=0, damageTurns, turnsDamaged;
     private int damage, damageOverTime, enemyDamage, heals;
-    private int specialManaCost=15, ultManaCost=50;
+    private int specialManaCost=15, ultManaCost=50, healManaCost=30;
     private boolean attacked, healed;
 
     Player hero = new Player();
@@ -80,25 +80,47 @@ public class GameActivity extends AppCompatActivity implements
 
     public void actionLeft(){
         //SPECIAL ATTACK
-        damage=10;
-        damageOverTime=5;
-        damageTurns=3;
-        turnsDamaged=0;
-        attacked=true;
-        Action();
+        hero.castSpell(specialManaCost);
+        if(hero.checkCasted()){
+            damage=10;
+            damageOverTime=5;
+            damageTurns=3;
+            turnsDamaged=0;
+            attacked=true;
+            Action();
+            hero.postCast();
+        }
+        else{
+            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+        }
     }
 
     public void actionRight(){
         //HEAL
-        heals=50;
-        healed=true;
-        Action();
+        hero.castSpell(healManaCost);
+        if(hero.checkCasted()){
+            heals=50;
+            healed=true;
+            Action();
+            hero.postCast();
+        }
+        else{
+            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+        }
     }
 
     public void actionDown(){
         //ULTIMATE ATTACK
-        damage=35;
-        attacked=true;
+        hero.castSpell(ultManaCost);
+        if(hero.checkCasted()){
+            damage=40;
+            attacked=true;
+            Action();
+            hero.postCast();
+        }
+        else{
+            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+        }
     }
 
     public void Action(){
@@ -130,6 +152,8 @@ public class GameActivity extends AppCompatActivity implements
                     //UPDATE SAVE DATA HERE
                     enemies.add(new Enemy());
                     enemyNum++;
+                    hero.heal(hero.getMaxHealth());
+                    hero.gainXP(2);
                     updateUI();
                 }
                 //ENEMY ATTACKS
@@ -172,6 +196,12 @@ public class GameActivity extends AppCompatActivity implements
         expbar.setProgress(hero.getExperience());
         enemyhealthbar.setProgress(enemies.get(enemyNum).getEnemyHealth());
         enemyabilitybar.setProgress(enemies.get(enemyNum).getAbility());
+
+        healthbar.setMax(hero.getMaxHealth());
+        manabar.setMax(hero.getMaxMana());
+        expbar.setMax(hero.getMaxExp());
+//        enemyhealthbar.setMax(enemies.get(enemyNum).getMaxHealth());
+//        enemyabilitybar.setMax(enemies.get(enemyNum).getMaxAbility());
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

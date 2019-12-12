@@ -74,6 +74,10 @@ public class Player {
         }
     }
 
+    public void postCast(){
+        casted=false;
+    }
+
     public void gainMana(int amount){
         if((mana+amount)>maxmana){
             mana=maxmana;
