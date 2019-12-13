@@ -24,7 +24,7 @@ public class GameActivity extends AppCompatActivity implements
     ConstraintLayout background;
 
     ProgressBar healthbar, manabar, expbar, enemyhealthbar, enemyabilitybar;
-    TextView health, mana, exp, enemyhealth, enemyability;
+    TextView health, mana, exp, enemyhealth, enemyability, alert;
 
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat mDetector;
@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity implements
         exp = findViewById(R.id.exp);
         enemyhealth = findViewById(R.id.enemyhealth);
         enemyability = findViewById(R.id.enemyability);
+        alert = findViewById(R.id.alert);
 
         healthbar = findViewById(R.id.healthbar);
         manabar = findViewById(R.id.manabar);
@@ -91,7 +92,13 @@ public class GameActivity extends AppCompatActivity implements
             hero.postCast();
         }
         else{
-            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+            alert.setText("Not Enough Mana");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setText("");
+                }
+            }, 750); // Millisecond 1000 = 1 sec
         }
     }
 
@@ -105,7 +112,13 @@ public class GameActivity extends AppCompatActivity implements
             hero.postCast();
         }
         else{
-            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+            alert.setText("Not Enough Mana");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setText("");
+                }
+            }, 750); // Millisecond 1000 = 1 sec
         }
     }
 
@@ -119,7 +132,13 @@ public class GameActivity extends AppCompatActivity implements
             hero.postCast();
         }
         else{
-            //PUT AN ALERT MESSAGE HERE (NOT ENOUGH MANA)
+            alert.setText("Not Enough Mana");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alert.setText("");
+                }
+            }, 750); // Millisecond 1000 = 1 sec
         }
     }
 
