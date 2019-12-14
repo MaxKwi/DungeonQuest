@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695"
+        app:layout_constraintVertical_bias="0.952"
         app:srcCompat="@drawable/swordsman" />
 
     <ImageView
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
+        app:layout_constraintVertical_bias="0.696"
         app:srcCompat="@drawable/green_slime" />
 
     <ProgressBar
@@ -151,7 +151,6 @@
         android:id="@+id/damage"
         android:layout_width="84dp"
         android:layout_height="33dp"
-        android:text="25"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="22sp"

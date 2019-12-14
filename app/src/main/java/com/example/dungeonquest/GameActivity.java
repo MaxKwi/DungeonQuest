@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +26,7 @@ public class GameActivity extends AppCompatActivity implements
     ConstraintLayout background;
 
     ProgressBar healthbar, manabar, expbar, enemyhealthbar, enemyabilitybar;
-    TextView health, mana, exp, enemyhealth, enemyability, alert;
+    TextView health, mana, exp, enemyhealth, enemyability, alert, level, enemyname;
 
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat mDetector;
@@ -36,13 +38,16 @@ public class GameActivity extends AppCompatActivity implements
     private static final String TAG = "GameActivity";
 
     private int enemyNum=0, damageTurns, turnsDamaged;
-    private int damage, damageOverTime, enemyDamage, heals;
+    private int damage, damageOverTime, enemyDamage, heals, levelnum=1;
     private int specialManaCost=15, ultManaCost=50, healManaCost=30;
     private boolean attacked, healed;
 
     Player hero = new Player();
 
     ArrayList<Enemy> enemies = new ArrayList();
+
+    final String[] Options = {"Health", "Mana"};
+    AlertDialog.Builder window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class GameActivity extends AppCompatActivity implements
         enemyhealth = findViewById(R.id.enemyhealth);
         enemyability = findViewById(R.id.enemyability);
         alert = findViewById(R.id.alert);
+        level = findViewById(R.id.level);
+        enemyname = findViewById(R.id.enemyname);
 
         healthbar = findViewById(R.id.healthbar);
         manabar = findViewById(R.id.manabar);
@@ -169,10 +176,14 @@ public class GameActivity extends AppCompatActivity implements
                 //SPAWNS NEW ENEMY
                 if(enemies.get(enemyNum).checkDead()){
                     //UPDATE SAVE DATA HERE
+                    hero.gainXP(2);
+                    if(hero.getLevel()>levelnum){
+                        levelUp();
+                    }
+                    levelnum=hero.getLevel();
                     enemies.add(new Enemy());
                     enemyNum++;
                     hero.heal(hero.getMaxHealth());
-                    hero.gainXP(2);
                     updateUI();
                 }
                 //ENEMY ATTACKS
@@ -221,6 +232,35 @@ public class GameActivity extends AppCompatActivity implements
         expbar.setMax(hero.getMaxExp());
 //        enemyhealthbar.setMax(enemies.get(enemyNum).getMaxHealth());
 //        enemyabilitybar.setMax(enemies.get(enemyNum).getMaxAbility());
+
+        level.setText("Level   "+hero.getLevel());
+//        enemyname.setText();
+    }
+
+    public void levelUp(){
+        hero.increaseMaxExp(2);
+        if(hero.getLevel()>=10){
+            background.setBackgroundResource(R.drawable.cave_environment);
+        }
+        window = new AlertDialog.Builder(this);
+        window.setTitle("Pick an attribute");
+        window.setCancelable(false);
+        window.setItems(Options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which == 0){
+                    //first option clicked, do this...
+
+                }else if(which == 1){
+                    //second option clicked, do this...
+
+                }else{
+                    //theres an error in what was selected
+
+                }
+            }
+        });
+        window.show();
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

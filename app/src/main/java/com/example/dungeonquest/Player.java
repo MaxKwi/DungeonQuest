@@ -88,7 +88,7 @@ public class Player {
     }
 
     public void gainXP(int amount){
-        if((experience+amount)>maxexp){
+        if((experience+amount)>=maxexp){
             level++;
             experience+=amount;
             experience=experience-maxexp;
@@ -96,5 +96,9 @@ public class Player {
         else{
             experience+=amount;
         }
+    }
+
+    public void increaseMaxExp(int amount){
+        maxexp+=amount;
     }
 }
