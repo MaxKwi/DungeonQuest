@@ -144,8 +144,8 @@ public class GameActivity extends AppCompatActivity implements
     public void saveData(){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("level", hero.getLevel());
-        editor.putInt("health", hero.getHealth());
-        editor.putInt("mana", hero.getMana());
+        editor.putInt("health", hero.getMaxHealth());
+        editor.putInt("mana", hero.getMaxMana());
         editor.putInt("experience", hero.getExperience());
         editor.putInt("maxexp", hero.getMaxExp());
         editor.putInt("ad", AD);
