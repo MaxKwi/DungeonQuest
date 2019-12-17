@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout title;
 
+    String selection = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchGame();
+                launchOldGame();
             }
         });
         htp.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +50,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchGame() {
+        selection="new";
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("selection", selection);
+        startActivity(intent);
+    }
+
+    private void launchOldGame() {
+        selection="old";
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("selection", selection);
         startActivity(intent);
     }
 

@@ -2,20 +2,29 @@ package com.example.dungeonquest;
 
 public class Enemy {
 
-    int health, ability, abilitymax;
+    int health, maxhealth, ability, abilitymax;
     boolean dead, usedAbility;
+    String name;
 
-    public Enemy(){
-        health=50;
+    public Enemy(int health_){
+        health=health_;
+        maxhealth=health_;
         ability=0;
         abilitymax=20;
+        name="Slime";
     }
 
     public int getEnemyHealth(){
         return health;
     }
+    public int getEnemyMaxHealth(){
+        return maxhealth;
+    }
     public int getAbility(){
         return ability;
+    }
+    public int getAbilityMax(){
+        return abilitymax;
     }
 
     public boolean checkDead(){

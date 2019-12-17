@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/darkgray" />
 
     <ImageView
-        android:id="@+id/hero"
+        android:id="@+id/heroview"
         android:layout_width="205dp"
         android:layout_height="396dp"
         android:contentDescription="TODO"
@@ -46,7 +46,7 @@
         app:srcCompat="@drawable/swordsman" />
 
     <ImageView
-        android:id="@+id/enemy"
+        android:id="@+id/enemyview"
         android:layout_width="204dp"
         android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,11 +140,11 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/hero"
-        app:layout_constraintEnd_toEndOf="@+id/hero"
+        app:layout_constraintBottom_toBottomOf="@+id/heroview"
+        app:layout_constraintEnd_toEndOf="@+id/heroview"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hero"
+        app:layout_constraintTop_toTopOf="@+id/heroview"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -154,11 +154,11 @@
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/enemy"
+        app:layout_constraintBottom_toBottomOf="@+id/enemyview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/enemy"
-        app:layout_constraintTop_toTopOf="@+id/enemy"
+        app:layout_constraintStart_toStartOf="@+id/enemyview"
+        app:layout_constraintTop_toTopOf="@+id/enemyview"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

@@ -101,4 +101,26 @@ public class Player {
     public void increaseMaxExp(int amount){
         maxexp+=amount;
     }
+    public void increaseMaxHP(int amount){
+        maxhp+=amount;
+    }
+    public void increaseMaxMana(int amount){
+        maxmana+=amount;
+    }
+
+    public void setLevel(int amount){
+        maxexp=amount;
+    }
+    public void setExp(int amount){
+        experience=amount;
+    }
+    public void setMaxHealth(int amount){
+        maxhp=amount;
+    }
+    public void setMaxMana(int amount){
+        maxmana=amount;
+    }
+    public void setMaxExp(int amount){
+        maxexp=amount;
+    }
 }

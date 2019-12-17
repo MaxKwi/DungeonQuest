@@ -4,14 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +33,9 @@ public class GameActivity extends AppCompatActivity implements
 
     ProgressBar healthbar, manabar, expbar, enemyhealthbar, enemyabilitybar;
     TextView health, mana, exp, enemyhealth, enemyability, alert, level, enemyname;
+    ImageView heroview, enemyview;
+    ObjectAnimator heromoveright, heromoveleft, enemymoveleft, enemymoveright;
+    Button button;
 
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat mDetector;
@@ -40,14 +49,18 @@ public class GameActivity extends AppCompatActivity implements
     private int enemyNum=0, damageTurns, turnsDamaged;
     private int damage, damageOverTime, enemyDamage, heals, levelnum=1;
     private int specialManaCost=15, ultManaCost=50, healManaCost=30;
+    private int AD=10, AP=10, currentID;
     private boolean attacked, healed;
 
     Player hero = new Player();
-
     ArrayList<Enemy> enemies = new ArrayList();
 
-    final String[] Options = {"Health", "Mana"};
+    int[] posXY = new int[2];
+
+    final String[] Options = {"    Health", "    Mana", "    Attack Damage", "    Ability Power"}; //4 spaces
     AlertDialog.Builder window;
+
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +88,98 @@ public class GameActivity extends AppCompatActivity implements
         enemyhealthbar = findViewById(R.id.enemyhealthbar);
         enemyabilitybar = findViewById(R.id.enemyabilitybar);
 
-        enemies.add(new Enemy());
+        heroview = findViewById(R.id.heroview);
+        enemyview = findViewById(R.id.enemyview);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        enemies.add(new Enemy(120));
+
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+
+        getIntent();
+        String selection = getIntent().getStringExtra("selection");
+        //CONTINUE
+        if(selection.equals("old")){
+            writeData();
+            updateUI();
+        }
+        //NEW GAME
+        else{
+            setDefaults();
+            updateUI();
+        }
+//        if(selection.equals("old")){
+//            Cursor res = myDB.getAllData();
+//            if (res.getCount()==0){
+//                return;
+//            }
+//            else {
+//                while (res.moveToNext()) {
+//                    if (Integer.parseInt(res.getString(2))>=100){
+//                        currentID=res.getCount();
+//                    }
+//                }
+//            }
+//            setData();
+//        }
+//        else{
+//            addData();
+//            Cursor res = myDB.getAllData();
+//            if (res.getCount()==0){
+//                return;
+//            }
+//            else {
+//                while (res.moveToNext()) {
+//                    if (Integer.parseInt(res.getString(1))>=100){
+//                        currentID=res.getCount();
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    //Updates shared preferences.
+    public void saveData(){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("level", hero.getLevel());
+        editor.putInt("health", hero.getHealth());
+        editor.putInt("mana", hero.getMana());
+        editor.putInt("experience", hero.getExperience());
+        editor.putInt("maxexp", hero.getMaxExp());
+        editor.putInt("ad", AD);
+        editor.putInt("ap", AP);
+        editor.commit();
+    }
+
+    //Sets shared preference values to game values (For when you continue off of an existing save)
+    public void writeData(){
+        hero.setLevel(sharedPref.getInt("level", 1));
+        hero.setMaxHealth(sharedPref.getInt("health", 100));
+        hero.setMaxMana(sharedPref.getInt("mana", 50));
+        hero.setMaxExp(sharedPref.getInt("maxexp", 10));
+        hero.setExp(sharedPref.getInt("experience", 0));
+        AD = sharedPref.getInt("ad", 10);
+        AP = sharedPref.getInt("ap", 10);
+    }
+
+    //Sets the default values for shared preference values (For when you die and/or start a new game)
+    public void setDefaults(){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("level", 1);
+        editor.putInt("health", 100);
+        editor.putInt("mana", 50);
+        editor.putInt("experience", 0);
+        editor.putInt("maxexp", 10);
+        editor.putInt("ad", 10);
+        editor.putInt("ap", 10);
+        editor.commit();
     }
 
     public void actionUp(){
         //BASIC ATTACK
-        damage = 15;
+        damage = (int)(AD*1.5);
         attacked=true;
         Action();
 
@@ -90,8 +189,8 @@ public class GameActivity extends AppCompatActivity implements
         //SPECIAL ATTACK
         hero.castSpell(specialManaCost);
         if(hero.checkCasted()){
-            damage=10;
-            damageOverTime=5;
+            damage=AD;
+            damageOverTime=(int)(AP*0.5);
             damageTurns=3;
             turnsDamaged=0;
             attacked=true;
@@ -113,7 +212,7 @@ public class GameActivity extends AppCompatActivity implements
         //HEAL
         hero.castSpell(healManaCost);
         if(hero.checkCasted()){
-            heals=50;
+            heals=50*(hero.getLevel()/2);
             healed=true;
             Action();
             hero.postCast();
@@ -133,7 +232,7 @@ public class GameActivity extends AppCompatActivity implements
         //ULTIMATE ATTACK
         hero.castSpell(ultManaCost);
         if(hero.checkCasted()){
-            damage=40;
+            damage=AP*4;
             attacked=true;
             Action();
             hero.postCast();
@@ -153,6 +252,17 @@ public class GameActivity extends AppCompatActivity implements
         // ATTACKS
         if(attacked){
             enemies.get(enemyNum).takeDamage(damage);
+            //ANIMATION CODE
+            heroview.getLocationOnScreen(posXY);
+            int posX = posXY[0];
+            int posY = posXY[1];
+            heromoveright = ObjectAnimator.ofFloat(heroview, heroview.X, posX, posX+200f);
+            heromoveright.setDuration(300);
+            heromoveright.start();
+            heromoveleft = ObjectAnimator.ofFloat(heroview, heroview.X, posX, posX);
+            heromoveleft.setDuration(300);
+            heromoveleft.setStartDelay(300);
+            heromoveleft.start();
             //DAMAGE OVER TIME
             if(turnsDamaged<damageTurns){
                 enemies.get(enemyNum).takeDamage(damageOverTime);
@@ -170,6 +280,7 @@ public class GameActivity extends AppCompatActivity implements
 
         final Intent intent = new Intent(this, GameOver.class);
 
+        //Delays the function by half a second. (For turn effect)
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -181,9 +292,10 @@ public class GameActivity extends AppCompatActivity implements
                         levelUp();
                     }
                     levelnum=hero.getLevel();
-                    enemies.add(new Enemy());
+                    enemies.add(new Enemy(100+(hero.getLevel()*20)));
                     enemyNum++;
                     hero.heal(hero.getMaxHealth());
+                    saveData();
                     updateUI();
                 }
                 //ENEMY ATTACKS
@@ -192,22 +304,35 @@ public class GameActivity extends AppCompatActivity implements
                     enemies.get(enemyNum).useAbility();
                     //SPECIAL ABILITY
                     if(enemies.get(enemyNum).getUsedAbility()){
-                        enemyDamage=40;
+                        enemyDamage=35*hero.getLevel();
                     }
                     //BASIC ATTACK
                     else{
-                        enemyDamage=15;
+                        enemyDamage=10*hero.getLevel();
                     }
                     hero.takeDamage(enemyDamage);
+                    //ANIMATION CODE
+                    enemyview.getLocationOnScreen(posXY);
+                    int posX = posXY[0];
+                    int posY = posXY[1];
+                    enemymoveleft = ObjectAnimator.ofFloat(enemyview, enemyview.X, posX, posX-200f);
+                    enemymoveleft.setDuration(300);
+                    enemymoveleft.start();
+                    enemymoveright = ObjectAnimator.ofFloat(enemyview, enemyview.X, posX, posX);
+                    enemymoveright.setDuration(300);
+                    enemymoveright.setStartDelay(300);
+                    enemymoveright.start();
                     updateUI();
                 }
                 //REGAINS MANA
                 if(hero.getMana()<hero.getMaxMana()){
                     hero.gainMana(10);
+                    updateUI();
                 }
                 //ENDS GAME
                 if (hero.checkDead()){
                     //DELETE DATABASE DATA HERE
+                    setDefaults();
                     startActivity(intent);
                 }
             }
@@ -230,19 +355,20 @@ public class GameActivity extends AppCompatActivity implements
         healthbar.setMax(hero.getMaxHealth());
         manabar.setMax(hero.getMaxMana());
         expbar.setMax(hero.getMaxExp());
-//        enemyhealthbar.setMax(enemies.get(enemyNum).getMaxHealth());
-//        enemyabilitybar.setMax(enemies.get(enemyNum).getMaxAbility());
+        enemyhealthbar.setMax(enemies.get(enemyNum).getEnemyMaxHealth());
+        enemyabilitybar.setMax(enemies.get(enemyNum).getAbilityMax());
 
         level.setText("Level   "+hero.getLevel());
-//        enemyname.setText();
+        enemyname.setText(enemies.get(enemyNum).name);
     }
 
+    //When leveled up, AlertDialog shows with options to change improve attributes. NOTE: All the code after the AlertDialog executes without waiting for your choice.
     public void levelUp(){
         hero.increaseMaxExp(2);
         if(hero.getLevel()>=10){
             background.setBackgroundResource(R.drawable.cave_environment);
         }
-        window = new AlertDialog.Builder(this);
+        window = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
         window.setTitle("Pick an attribute");
         window.setCancelable(false);
         window.setItems(Options, new DialogInterface.OnClickListener() {
@@ -250,20 +376,31 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 if(which == 0){
                     //first option clicked, do this...
-
+                    hero.increaseMaxHP(50);
                 }else if(which == 1){
                     //second option clicked, do this...
-
+                    hero.increaseMaxMana(25);
+                }else if(which == 2){
+                    //second option clicked, do this...
+                    AD+=5;
+                }else if(which == 3){
+                    //second option clicked, do this...
+                    AP+=5;
                 }else{
                     //theres an error in what was selected
 
                 }
+                hero.heal(hero.getMaxHealth());
+                saveData();
+                updateUI();
             }
         });
         window.show();
     }
 
+//TouchEvents
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
         if (this.mDetector.onTouchEvent(event)) {
