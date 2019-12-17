@@ -212,7 +212,7 @@ public class GameActivity extends AppCompatActivity implements
         //HEAL
         hero.castSpell(healManaCost);
         if(hero.checkCasted()){
-            heals=50*(hero.getLevel()/2);
+            heals=(int)(100*((double)hero.getLevel()/2));
             healed=true;
             Action();
             hero.postCast();
