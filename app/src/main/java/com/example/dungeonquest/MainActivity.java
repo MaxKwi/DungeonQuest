@@ -1,15 +1,21 @@
 package com.example.dungeonquest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView newgame, cont, htp;
+
+    ConstraintLayout title;
+
+    String selection = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         cont = (TextView)findViewById(R.id.cont);
         htp = (TextView)findViewById(R.id.htp);
 
+        title = findViewById(R.id.titlebackground);
+        title.setBackgroundResource(R.drawable.titlecropped);
+
         newgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchGame();
+                launchOldGame();
             }
         });
         htp.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +50,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchGame() {
+        selection="new";
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("selection", selection);
+        startActivity(intent);
+    }
+
+    private void launchOldGame() {
+        selection="old";
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("selection", selection);
         startActivity(intent);
     }
 

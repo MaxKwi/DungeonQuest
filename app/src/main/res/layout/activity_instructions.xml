@@ -8,12 +8,12 @@
 
     <TextView
         android:id="@+id/newgame2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="399dp"
+        android:layout_height="604dp"
         android:layout_marginTop="120dp"
         android:fontFamily="@font/rub"
-        android:text="Example text"
-        android:textSize="36sp"
+        android:text="An endless dungeon game where is defeat monsters to progress to the next level. Swipe up for a basic attack. Basics attacks have no cost and scale with the Attack Damage stat. Swipe right for a special attack. These do a flat amount AD damage (thought not much), then do some damage over the course of 3 turns. This damage scales with Ability Power. This costs 15 mana to cast. Swipe down for an ultimate attack that does a ton of AP damage. Costs 50 mana. Swipe right for a healing spell that costs 35 mana. Every level you will pick an attribute to improve."
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/cont"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

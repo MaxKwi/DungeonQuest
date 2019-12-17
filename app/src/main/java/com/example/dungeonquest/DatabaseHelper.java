@@ -15,9 +15,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String  COL_1 = "ID";
     public static final String COL_2 = "LEVEL";
     public static final String COL_3 = "HEALTH";
-    public static final String COL_4 = "STAMINA";
-    public static final String COL_5 = "MAGIC";
-    public static final String COL_6 = "EXPERIENCE";
+    public static final String COL_4 = "MAGIC";
+    public static final String COL_5 = "EXPERIENCE";
+    public static final String COL_6 = "AD";
+    public static final String COL_7 = "AP";
+    public static final String COL_8 = "EXP";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -27,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,LEVEL TEXT,HEALTH TEXT,STAMINA TEXT, MAGIC TEXT, EXPERIENCE TEXT)");
+        sqLiteDatabase.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,LEVEL TEXT,HEALTH TEXT, MAGIC TEXT, EXPERIENCE TEXT, AD TEXT, AP TEXT, EXP TEXT)");
     }
 
     @Override
@@ -36,14 +38,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public boolean insertData(String level, String health, String stamina, String magic, String experience){
+    public boolean insertData(String level, String health, String magic, String experience, String ad, String ap, String xp){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,level);
         contentValues.put(COL_3,health);
-        contentValues.put(COL_4,stamina);
-        contentValues.put(COL_5, magic);
-        contentValues.put(COL_6, experience);
+        contentValues.put(COL_4, magic);
+        contentValues.put(COL_5, experience);
+        contentValues.put(COL_6, ad);
+        contentValues.put(COL_7, ap);
+        contentValues.put(COL_8, xp);
         long result = sqLiteDatabase.insert(TABLE_NAME,null,contentValues);
         if (result==-1){
             return false;
@@ -59,15 +63,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean updateData(String id, String level, String health, String stamina, String magic, String experience){
+    public boolean updateData(String id, String level, String health, String magic, String experience, String ad, String ap, String xp){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,id);
         contentValues.put(COL_2,level);
         contentValues.put(COL_3,health);
-        contentValues.put(COL_4,stamina);
-        contentValues.put(COL_5, magic);
-        contentValues.put(COL_6, experience);
+        contentValues.put(COL_4, magic);
+        contentValues.put(COL_5, experience);
+        contentValues.put(COL_6, ad);
+        contentValues.put(COL_7, ap);
+        contentValues.put(COL_8, xp);
         sqLiteDatabase.update(TABLE_NAME, contentValues, "ID = ?", new String[]{ id });
         return true;
     }

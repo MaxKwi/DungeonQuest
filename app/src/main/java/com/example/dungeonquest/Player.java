@@ -2,13 +2,18 @@ package com.example.dungeonquest;
 
 public class Player {
 
-    int level=0, health=0, stamina=0, magic=0, experience=0;
+    int level, health, maxhp, mana, maxmana, experience, maxexp;
+
+    boolean casted, dead;
 
     public Player(){
         level=1;
         health=100;
-        stamina=50;
-        magic=20;
+        maxhp=100;
+        mana=50;
+        maxmana=50;
+        experience=0;
+        maxexp=10;
     }
 
     public int getLevel(){
@@ -17,15 +22,105 @@ public class Player {
     public int getHealth(){
         return health;
     }
-    public int getStamina(){
-        return stamina;
+    public int getMaxHealth(){
+        return maxhp;
     }
-    public int getMagic(){
-        return magic;
+    public int getMana(){
+        return mana;
+    }
+    public int getMaxMana(){
+        return maxmana;
     }
     public int getExperience(){
         return experience;
     }
+    public int getMaxExp(){
+        return maxexp;
+    }
 
+    public boolean checkCasted(){
+        return casted;
+    }
+    public boolean checkDead(){
+        return dead;
+    }
 
+    public void takeDamage(int amount){
+        health-=amount;
+        if(health<=0){
+            dead=true;
+        }
+        else{
+            dead=false;
+        }
+    }
+
+    public void heal(int amount){
+        if((health+amount)>maxhp){
+            health=maxhp;
+        }
+        else{
+            health+=amount;
+        }
+    }
+
+    public void castSpell(int cost){
+        if(mana>=cost){
+            mana-=cost;
+            casted=true;
+        }
+        else{
+            casted=false;
+        }
+    }
+
+    public void postCast(){
+        casted=false;
+    }
+
+    public void gainMana(int amount){
+        if((mana+amount)>maxmana){
+            mana=maxmana;
+        }
+        else{
+            mana+=amount;
+        }
+    }
+
+    public void gainXP(int amount){
+        if((experience+amount)>=maxexp){
+            level++;
+            experience+=amount;
+            experience=experience-maxexp;
+        }
+        else{
+            experience+=amount;
+        }
+    }
+
+    public void increaseMaxExp(int amount){
+        maxexp+=amount;
+    }
+    public void increaseMaxHP(int amount){
+        maxhp+=amount;
+    }
+    public void increaseMaxMana(int amount){
+        maxmana+=amount;
+    }
+
+    public void setLevel(int amount){
+        maxexp=amount;
+    }
+    public void setExp(int amount){
+        experience=amount;
+    }
+    public void setMaxHealth(int amount){
+        maxhp=amount;
+    }
+    public void setMaxMana(int amount){
+        maxmana=amount;
+    }
+    public void setMaxExp(int amount){
+        maxexp=amount;
+    }
 }

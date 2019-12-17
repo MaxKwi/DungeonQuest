@@ -7,6 +7,56 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <ImageView
+        android:id="@+id/barbackground2"
+        android:layout_width="397dp"
+        android:layout_height="84dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/lightgray" />
+
+    <ImageView
+        android:id="@+id/barbackground"
+        android:layout_width="388dp"
+        android:layout_height="74dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007"
+        app:srcCompat="@drawable/darkgray" />
+
+    <ImageView
+        android:id="@+id/heroview"
+        android:layout_width="205dp"
+        android:layout_height="396dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.952"
+        app:srcCompat="@drawable/swordsman" />
+
+    <ImageView
+        android:id="@+id/enemyview"
+        android:layout_width="204dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.696"
+        app:srcCompat="@drawable/green_slime" />
+
     <ProgressBar
         android:id="@+id/healthbar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -15,57 +65,42 @@
         android:max="100"
         android:progress="100"
         android:progressTint="#F44336"
-        app:layout_constraintBottom_toTopOf="@+id/staminabar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.018" />
 
     <ProgressBar
-        android:id="@+id/staminabar"
+        android:id="@+id/manabar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="178dp"
+        android:layout_width="179dp"
         android:layout_height="21dp"
         android:max="50"
         android:progress="50"
-        android:progressTint="#4CAF50"
-        app:layout_constraintBottom_toTopOf="@+id/magicbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918" />
-
-    <ProgressBar
-        android:id="@+id/magicbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="178dp"
-        android:layout_height="21dp"
-        android:max="20"
-        android:progress="20"
         android:progressTint="#2196F3"
-        app:layout_constraintBottom_toTopOf="@+id/expbar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintVertical_bias="0.047" />
 
     <ProgressBar
         android:id="@+id/expbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="178dp"
+        android:layout_width="179dp"
         android:layout_height="21dp"
         android:max="10"
         android:progress="0"
         android:progressTint="#FFC107"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <ProgressBar
         android:id="@+id/enemyhealthbar"
@@ -75,12 +110,12 @@
         android:max="50"
         android:progress="50"
         android:progressTint="#F44336"
-        app:layout_constraintBottom_toTopOf="@+id/enemyabilitybar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.018" />
 
     <ProgressBar
         android:id="@+id/enemyabilitybar"
@@ -95,46 +130,142 @@
         app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
+        app:layout_constraintVertical_bias="0.047" />
 
-    <ImageView
-        android:id="@+id/hero"
-        android:layout_width="205dp"
-        android:layout_height="396dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695"
-        app:srcCompat="@drawable/swordsman"
-        android:contentDescription="TODO" />
-
-    <ImageView
-        android:id="@+id/enemy"
-        android:layout_width="204dp"
-        android:layout_height="250dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="189dp"
+        android:layout_height="61dp"
+        android:fontFamily="@font/rub"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/heroview"
+        app:layout_constraintEnd_toEndOf="@+id/heroview"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.385"
-        app:srcCompat="@drawable/green_slime" />
+        app:layout_constraintTop_toTopOf="@+id/heroview"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/damage"
         android:layout_width="84dp"
         android:layout_height="33dp"
-        android:text="25"
         android:textAlignment="center"
         android:textColor="#ffffff"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/enemy"
+        app:layout_constraintBottom_toBottomOf="@+id/enemyview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="@+id/enemy"
-        app:layout_constraintTop_toTopOf="@+id/enemy"
+        app:layout_constraintStart_toStartOf="@+id/enemyview"
+        app:layout_constraintTop_toTopOf="@+id/enemyview"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/enemyability"
+        android:layout_width="164dp"
+        android:layout_height="27dp"
+        android:text="0"
+        android:textAlignment="viewEnd"
+        android:textColor="#9C27B0"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <TextView
+        android:id="@+id/enemyhealth"
+        android:layout_width="163dp"
+        android:layout_height="28dp"
+        android:text="100"
+        android:textAlignment="viewEnd"
+        android:textColor="#F44336"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007" />
+
+    <TextView
+        android:id="@+id/exp"
+        android:layout_width="164dp"
+        android:layout_height="93dp"
+        android:text="0"
+        android:textAlignment="viewEnd"
+        android:textColor="#FFC107"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.072" />
+
+    <TextView
+        android:id="@+id/mana"
+        android:layout_width="162dp"
+        android:layout_height="53dp"
+        android:text="50"
+        android:textAlignment="viewEnd"
+        android:textColor="#03A9F4"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.038" />
+
+    <TextView
+        android:id="@+id/health"
+        android:layout_width="163dp"
+        android:layout_height="28dp"
+        android:text="100"
+        android:textAlignment="viewEnd"
+        android:textColor="#F44336"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.007" />
+
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="178dp"
+        android:layout_height="20dp"
+        android:fontFamily="@font/rub"
+        android:text="Level   1"
+        android:textAlignment="viewStart"
+        android:textColor="#B0FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068" />
+
+    <TextView
+        android:id="@+id/enemyname"
+        android:layout_width="178dp"
+        android:layout_height="21dp"
+        android:fontFamily="@font/rub"
+        android:text="Slime"
+        android:textAlignment="viewEnd"
+        android:textColor="#B0FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
