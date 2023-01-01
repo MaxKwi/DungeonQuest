@@ -1,2 +1,4 @@
 # DungeonQuest
-Mobile Apps Android Project
+Mobile Apps First Semester Project
+
+A prototype Android project for a fantasy role-playing game.
